@@ -13,4 +13,9 @@ jobs:
         run: |
           pip install black
           black .
-
+      - name: Create a new branch
+        uses: actions/create-or-update-branch@v1
+        with:
+          branch: update-code
+          commit-message: Update code
+          create-pull-request: true
