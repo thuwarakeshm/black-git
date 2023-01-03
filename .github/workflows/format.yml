@@ -14,8 +14,27 @@ jobs:
           pip install black
           black .
       - name: Create a new branch
-        uses: actions/create-or-update-branch@v1
+        uses: actions/create-branch@v1
         with:
           branch: update-code
           commit-message: Update code
-          create-pull-request: true
+          repository: thuwarakeshm/black-git
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update-code
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update code
+          title: Update code
+          body: Update code
+          branch: update-code
+          base: master
+      - name: Delete branch
+        uses: peter-evans/delete-branch@v2
+        with:
+          branch: update-code
