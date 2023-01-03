@@ -13,28 +13,11 @@ jobs:
         run: |
           pip install black
           black .
-      - name: Create a new branch
-        uses: actions/create-branch@v1
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v4
         with:
-          branch: update-code
-          commit-message: Update code
-          repository: thuwarakeshm/black-git
-          access-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: update-code
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Update code
-          title: Update code
-          body: Update code
-          branch: update-code
-          base: master
-      - name: Delete branch
-        uses: peter-evans/delete-branch@v2
-        with:
-          branch: update-code
+          author_name: ${{ github.actor }}
+          author_email: ${{ github.actor }}@users.noreply.github.com
+          message: "Format code with black"
+          add: "."
+          branch: ${{ github.ref }}
